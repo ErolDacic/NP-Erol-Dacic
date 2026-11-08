@@ -1,0 +1,6 @@
+[
+  {"reservation_id":"R001","guest":"Ana Marković","nights":3,"price_per_night":"80.00","discount_percent":"10","status":"potvrdjena"},
+  {"reservation_id":"R002","guest":"Marko Petrović","nights":2,"price_per_night":"120.00","discount_percent":"0","status":"potvrdjena"},
+  {"reservation_id":"R003","guest":"Jelena Ivanović","nights":4,"price_per_night":"95.00","discount_percent":"5","status":"otkazana"},
+  {"reservation_id":"R004","guest":"Petar Vuković","nights":1,"price_per_night":"55.50","discount_percent":"20","status":"potvrdjena"}
+]

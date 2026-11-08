@@ -1,0 +1,34 @@
+{
+  "total_input": 4,
+  "confirmed": 3,
+  "canceled": 1,
+  "gross_revenue": "535.50",
+  "discounts": "35.10",
+  "net_revenue": "500.40",
+  "bookings": [
+    {
+      "reservation_id": "R001",
+      "guest": "Ana Marković",
+      "nights": 3,
+      "subtotal": "240.00",
+      "discount": "24.00",
+      "total": "216.00"
+    },
+    {
+      "reservation_id": "R002",
+      "guest": "Marko Petrović",
+      "nights": 2,
+      "subtotal": "240.00",
+      "discount": "0.00",
+      "total": "240.00"
+    },
+    {
+      "reservation_id": "R004",
+      "guest": "Petar Vuković",
+      "nights": 1,
+      "subtotal": "55.50",
+      "discount": "11.10",
+      "total": "44.40"
+    }
+  ]
+}

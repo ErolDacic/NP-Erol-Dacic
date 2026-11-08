@@ -1,0 +1,5 @@
+reservation_id,guest,nights,price_per_night,discount_percent,status
+R001,Ana Marković,3,80.00,10,potvrdjena
+R002,Marko Petrović,2,120.00,0,potvrdjena
+R003,Jelena Ivanović,4,95.00,5,otkazana
+R004,Petar Vuković,1,55.50,20,potvrdjena

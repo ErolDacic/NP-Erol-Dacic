@@ -1,0 +1,35 @@
+﻿name: Mini projekat 2 - Python checks
+
+on:
+  push:
+    paths:
+      - "mini-projekat-2/**"
+      - ".github/workflows/mini-projekat-2.yml"
+  pull_request:
+    paths:
+      - "mini-projekat-2/**"
+      - ".github/workflows/mini-projekat-2.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: mini-projekat-2
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: python -m pip install -e ".[dev]"
+
+      - name: Ruff
+        run: python -m ruff check .
+
+      - name: Pytest
+        run: python -m pytest -q
