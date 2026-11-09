@@ -1,4 +1,4 @@
-﻿# Mini projekat 2 — Refaktoring obrade rezervacija
+﻿# Mini projekat 1 — Refaktoring obrade rezervacija
 
 **Univerzitet Donja Gorica (UDG), FIST**  
 **Predmet:** Napredno programiranje  
