@@ -1,6 +1,10 @@
 import pytest
 from ml_experiment.metrics import (
-    AccuracyMetric, F1Metric, PrecisionMetric, RecallMetric, calculate_metrics
+    AccuracyMetric,
+    F1Metric,
+    PrecisionMetric,
+    RecallMetric,
+    calculate_metrics,
 )
 
 

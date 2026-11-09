@@ -1,8 +1,8 @@
 """Factory pattern: centralised creation of scikit-learn estimators."""
 
 from sklearn.linear_model import LogisticRegression
-from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
 
 
 class ModelFactory:

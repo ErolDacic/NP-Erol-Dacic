@@ -1,6 +1,7 @@
 """Command-line demonstration of the framework on the Iris dataset."""
 
 import argparse
+
 from .experiment import IrisExperiment
 from .observers import ConsoleObserver, EventPublisher
 

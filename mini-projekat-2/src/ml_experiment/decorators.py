@@ -2,6 +2,7 @@
 
 from functools import wraps
 from time import perf_counter
+
 from .observers import TrainingEvent
 
 

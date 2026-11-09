@@ -1,6 +1,6 @@
 import pytest
-from sklearn.base import ClassifierMixin
 from ml_experiment.models import ModelFactory
+from sklearn.base import ClassifierMixin
 
 
 @pytest.mark.parametrize("name", ["logistic_regression", "decision_tree", "knn"])
