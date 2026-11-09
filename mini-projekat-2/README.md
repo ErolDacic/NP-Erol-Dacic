@@ -1,127 +1,177 @@
-﻿# Mini projekat 1 — Refaktoring obrade rezervacija
+# Mini projekat 2 — Mini okvir za ML eksperimente
 
-**Univerzitet Donja Gorica (UDG), FIST**  
-**Predmet:** Napredno programiranje  
-**Student:** Erol Dacic  
-**GitHub repozitorijum:** `np-Erol-Dacic`
+Mali Python okvir koji demonstrira obrasce projektovanja na Iris skupu podataka.
+Implementacija koristi `scikit-learn`, a testovi `pytest`.
 
-## 1. Brzi početak (Windows PowerShell)
+## 1. Šta je implementirano
 
-```powershell
-py -3 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -e ".[dev]"
-python -m pytest -q
-python -m ruff check .
-python -m rezervacije average 100 200 300
-python -m rezervacije report data/rezervacije.json --output izvjestaj.json
-```
-
-Projekat zahtijeva Python 3.12 ili noviji. Komanda `py -3` koristi podrazumijevanu instaliranu verziju Pythona. Ako PowerShell blokira aktivaciju, izvršiti direktno `.\.venv\Scripts\python.exe -m pip install -e ".[dev]"` pa istim prefiksom ostale `python -m ...` komande. Za Linux/macOS aktivirati sa `source .venv/bin/activate`.
-
-**Alternativa:** Google Colab može pokrenuti Python i testove, ali za GitHub i VS Code preporučen je lokalni rad. Za Colab je potrebno prvo prenijeti repo/datoteke.
+| Zahtjev | Implementacija |
+|---|---|
+| Factory za modele | `ModelFactory` kreira Logistic Regression, Decision Tree i kNN klasifikatore |
+| Strategy za metrike | `MetricStrategy` interfejs i strategije Accuracy, F1, Precision, Recall |
+| Observer za praćenje treninga | `EventPublisher`, `ConsoleObserver`, `HistoryObserver` |
+| Template Method | `BaseExperiment.run()` definiše standardni tok eksperimenta |
+| Decorator za mjerenje vremena | `@measure_time` mjeri trajanje treniranja i objavljuje timing događaj |
+| Iris demonstracija | `IrisExperiment` koristi ugrađeni Iris skup iz scikit-learn biblioteke |
+| Pytest | Testovi za factory, metrike, observer i kompletan eksperiment |
 
 ## 2. Zahtjevi
 
-### Ponovo korišćena osnova iz prvog zadatka
+- Python 3.10 ili noviji
+- pip
+- Visual Studio Code (preporučeno)
 
-1. **Python 3.12+ i VS Code:** gore navedene komande i `pyproject.toml` definišu okruženje. Instalacija na studentov računar mora se uraditi lokalno.
-2. **GitHub repozitorijum `np-Erol-Dacic`:** projekat je spreman za upload; nalog i repozitorijum mora kreirati student (nije moguće obaviti bez pristupa nalogu).
-3. **Ruff + pytest:** konfigurisani u `pyproject.toml` i pokreću se navedenim komandama; automatska CI provjera je u `.github/workflows/python-tests.yml`.
-4. **AI funkcija `prosjecna_cijena`:** implementacija u `src/rezervacije/analytics.py`, test u `tests/test_analytics.py`. Koristi `Decimal`, validira ulaze, obrađuje greške i ispravno zaokružuje.
-5. **AI upiti i uočeni nedostaci:** dati u nastavku README-a.
+## 3. Pokretanje u VS Code
 
-### Zadatak 2: Mini projekat 1
+1. Preuzmi i raspakuj ZIP arhivu.
+2. U VS Code izaberi **File → Open Folder** i otvori raspakovani folder `ml_experiment_framework`.
+3. Otvori terminal u VS Code: **Terminal → New Terminal**.
+4. Kreiraj virtuelno okruženje:
 
-1. **Vlastiti monolitni skript:** `legacy/monolit.py` je početni primjer (nije dio aktivnog koda).
-2. **Refaktoring uz S i D:** implementiran u `src/rezervacije/`.
-3. **Protocol za izvor podataka i izvještavanje:** `ReservationSource` u `sources.py` i `ReportWriter` u `reporting.py`.
-4. **Najmanje tri pytest testa zamjene izvora:** projekat sadrži više od tri testa, uključujući upoređivanje CSV i JSON izvora i lažni izvor bez datoteke.
-5. **AI upiti i ispravke:** opisani ispod.
+   **Windows (PowerShell):**
+   ```powershell
+   py -m venv .venv
+   .venv\Scripts\Activate.ps1
+   ```
 
-## 3. Arhitektura projekta
+   **macOS / Linux:**
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate
+   ```
+
+5. Instaliraj projekat i zavisnosti:
+   ```bash
+   python -m pip install --upgrade pip
+   pip install -e ".[dev]"
+   ```
+   Alternativa je `pip install -r requirements.txt`.
+
+6. Pokreni demonstraciju:
+   ```bash
+   python -m ml_experiment.demo
+   ```
+   Ili izaberi drugi model:
+   ```bash
+   python -m ml_experiment.demo --model decision_tree
+   python -m ml_experiment.demo --model knn
+   ```
+
+7. Pokreni testove:
+   ```bash
+   pytest -v
+   ```
+   Očekuje se da svi testovi prođu. Tačne vrijednosti metrika mogu neznatno zavisiti od verzija biblioteka.
+
+## 4. Struktura projekta
 
 ```text
-np-ime-prezime/
-├── src/rezervacije/
-│   ├── __init__.py
-│   ├── __main__.py
-│   ├── analytics.py     # prosjecna_cijena
-│   ├── cli.py           # komandna linija
-│   ├── errors.py        # domenski izuzeci
-│   ├── models.py        # dataclass modeli
-│   ├── pricing.py       # izračunavanje cijena
-│   ├── reporting.py     # Protocol za izvještaje + JSON writer
-│   ├── service.py       # poslovni tok
-│   ├── sources.py       # Protocol + CSV/JSON izvori
-│   └── validation.py    # validacija ulaznih redova
-├── data/                # dva jednaka primjera u CSV i JSON formatu
-├── tests/               # automatizovani testovi
-├── legacy/monolit.py    # početni primjer prije refaktoringa
-├── .github/workflows/  # automatska CI provjera na GitHub-u
-├── pyproject.toml       # paket + test i ruff konfiguracija
-└── README.md
+ml_experiment_framework/
+├── pyproject.toml
+├── requirements.txt
+├── README.md
+├── src/
+│   └── ml_experiment/
+│       ├── __init__.py
+│       ├── models.py
+│       ├── metrics.py
+│       ├── observers.py
+│       ├── decorators.py
+│       ├── experiment.py
+│       └── demo.py
+└── tests/
+    ├── test_models.py
+    ├── test_metrics.py
+    ├── test_observers.py
+    └── test_experiment.py
 ```
 
-### SOLID principi — S i D
+## 5. Mermaid dijagram klasa
 
-**S — Single Responsibility Principle:** izvori samo učitavaju podatke, validator samo provjerava/mapira podatke, kalkulator samo obračunava cijene, servis upravlja tokom, a pisac samo čuva izvještaj. Svaka klasa ima jedan razlog za promjenu.
+Dijagram prikazuje glavne klase i njihove odnose.
 
-**D — Dependency Inversion Principle:** `ReservationService` zavisi od apstrakcije `ReservationSource` (Protocol), a ne od konkretne CSV/JSON klase. U testovima se lako zamjenjuje sa `InMemorySource`. Pisanje izvještaja ima zaseban `ReportWriter` Protocol; implementacija `JsonReportWriter` je zamjenjiva bez promjene poslovnog modela.
+```mermaid
+classDiagram
+    class ModelFactory {
+        +create(model_name, **params)
+        +supported_models()
+    }
 
-**Pravila obrade:** aktivne su samo rezervacije `potvrdjena`; otkazane se evidentiraju ali ne ulaze u prihod. Vrijednosti su u EUR. Svaka rezervacija mora imati jedinstven ID, pozitivan cijeli broj noćenja, nenegativnu cijenu, popust 0–100 i validan status. Novac se obračunava pomoću `Decimal`, na dvije decimale (`ROUND_HALF_UP`). Podaci su demonstracioni i nijesu preuzeti iz realnog sistema.
+    class MetricStrategy {
+        <<abstract>>
+        +calculate(y_true, y_pred)
+    }
+    class AccuracyMetric
+    class F1Metric
+    class PrecisionMetric
+    class RecallMetric
+    MetricStrategy <|-- AccuracyMetric
+    MetricStrategy <|-- F1Metric
+    MetricStrategy <|-- PrecisionMetric
+    MetricStrategy <|-- RecallMetric
 
-## 4. AI upiti korišćeni u pripremi
+    class Observer {
+        <<interface>>
+        +update(event)
+    }
+    class ConsoleObserver
+    class HistoryObserver
+    class EventPublisher {
+        +attach(observer)
+        +detach(observer)
+        +publish(event)
+    }
+    Observer <|-- ConsoleObserver
+    Observer <|-- HistoryObserver
+    EventPublisher o--> Observer
 
-Radi transparentnosti navedeni su *sažeti sadržaji zadataka postavljenih AI asistentu tokom izrade ovog projekta*. Nijesu predstavljeni kao doslovan zapis svih internih koraka.
-
-**Upit 1 — početni zadatak:** „Kreiraj Python 3.12+ projekat za obradu rezervacija, implementiraj funkciju `prosjecna_cijena`, podesi `ruff` i `pytest`, napiši testove i uputstvo za GitHub.“
-
-**Upit 2 — refaktoring:** „Razdvoji monolitnu obradu rezervacija na učitavanje, validaciju, obračun i izvještavanje. Primijeni SOLID S i D i `typing.Protocol` za izvor podataka i izvještavanje.“
-
-**Upit 3 — testiranje:** „Dodaj pytest testove koji koriste zamjenski izvor podataka, upoređuju CSV i JSON, odbijaju negativne cijene, duplirane ID-jeve, neispravan popust i provjeravaju preciznost novčanih vrijednosti.“
-
-**Upit 4 — revizija:** „Provjeri rubne slučajeve, tipove, greške, logiku otkazanih rezervacija i dokumentuj šta je ispravljeno u odnosu na monolit.“
-
-## 5. Uočeni nedostaci generisanog/početnog pristupa i ispravke
-
-| Problem početnog monolita | Ispravka u završnoj verziji |
-|---|---|
-| Jedna funkcija radi I/O, validaciju, obračun i izvještavanje | Odvojeni `sources.py`, `validation.py`, `pricing.py`, `service.py`, `reporting.py` |
-| Koristi `float` za novac (moguća greška preciznosti) | `Decimal` i eksplicitno zaokruživanje na 2 decimale |
-| Bez provjere neispravnog broja noćenja i negativnih vrijednosti | Jasna validacija i `ReservationError` |
-| Pristup fiksno vezan za JSON | `ReservationSource` Protocol + CSV i JSON implementacije |
-| Nemoguće testiranje poslovne logike bez fajla | `InMemorySource` u testovima |
-| Nema provjere dupliranih rezervacija | Provjera jedinstvenosti ID-ja |
-| Nema dokumentacije ni testova | README, pytest, ruff i GitHub Actions |
-| Pretpostavlja dostupnost ulazne datoteke | Kontrolisana poruka o grešci |
-
-**Rezultati lokalne provjere:** Svih 26 pytest testova uspješno je prošlo (`26 passed`). Ruff provjera je uspješno završena (`All checks passed!`). Automatske provjere su pokrenute u lokalnom Python 3.13 okruženju.
-
-**Lična provjera prije predaje:** pokrenuti `pytest -q` i `ruff check .`; pregledati rezultat i razumjeti rješenje jer profesor može tražiti usmeno objašnjenje.
-
-## 6. Primjeri korišćenja i očekivani rezultat
-
-```bash
-python -m rezervacije average 12 24 36
-# Prosječna cijena: 24.00 EUR
-
-python -m rezervacije report data/rezervacije.csv --output izvjestaj.json
-# Izvještaj: izvjestaj.json | Neto prihod: 500.40 EUR
+    class BaseExperiment {
+        <<abstract>>
+        +run()
+        +load_data()
+        +create_model()
+        +train_model()
+        +predict()
+        +evaluate()
+    }
+    class IrisExperiment
+    BaseExperiment <|-- IrisExperiment
+    IrisExperiment ..> ModelFactory : creates model
+    BaseExperiment ..> MetricStrategy : uses strategies
+    BaseExperiment --> EventPublisher : publishes events
+    BaseExperiment ..> measure_time : decorated training
 ```
 
-Demo obračun: R001 = 216.00; R002 = 240.00; R003 otkazana; R004 = 44.40, ukupno **500.40 EUR**.
+## 6. Objašnjenje obrazaca projektovanja
 
-## 7. Objavljivanje na GitHub-u i predaja
+### Factory
+`ModelFactory` skriva detalje kreiranja konkretnih scikit-learn modela. Ostatak programa traži model po nazivu, bez direktnog poznavanja konstruktora svake klase. Novi model se može dodati u factory.
 
-U terminalu foldera izvršiti:
+### Strategy
+Sve metrike imaju isti interfejs `calculate(y_true, y_pred)`. Funkcija `calculate_metrics` prihvata listu strategija, pa se metrike mogu dodavati ili mijenjati bez izmjene toka eksperimenta.
 
-```bash
-git init
-git add .
-git commit -m "Zadatak 2: refaktoring rezervacija"
-git branch -M main
-git remote add origin https://github.com/ErolDacic/np-Erol-Dacic.git
-git push -u origin main
-```
+### Observer
+`EventPublisher` šalje događaje registrovanim posmatračima. `ConsoleObserver` ispisuje događaje u terminal, dok `HistoryObserver` čuva događaje u listi. Tok eksperimenta ne mora znati šta posmatrači rade sa događajima.
+
+### Template Method
+`BaseExperiment.run()` definiše redosljed koraka: učitavanje podataka, podjela, kreiranje modela, treniranje, predikcija i evaluacija. Podklasa `IrisExperiment` implementira specifične korake, dok zajednički tok ostaje isti.
+
+### Decorator
+Dekorator `@measure_time` omotava metodu treniranja, mjeri vrijeme pomoću `perf_counter` i objavljuje događaj sa trajanjem. Ne mijenja povratnu vrijednost metode.
+
+## 7. AI alati — dokumentovanje upotrebe
+
+AI alat (ChatGPT) korišćen je kao pomoć pri:
+- razradi strukture projekta i rasporedu modula;
+- pripremi početne implementacije obrazaca projektovanja;
+- pisanju README dokumentacije i Mermaid dijagrama;
+- osmišljavanju pytest testova.
+
+Konačnu odgovornost za provjeru, razumijevanje i eventualne izmjene koda ima autor projekta. Prije predaje student treba samostalno pokrenuti program i testove, pregledati implementaciju i biti spreman da objasni svaki obrazac. Ako je korišćen još neki AI alat, navesti ga ovdje i opisati konkretnu upotrebu.
+
+## 8. Napomene za predaju
+
+- Predaj GitHub repozitorijum i ovaj README, u skladu sa instrukcijama predmeta.
+- Nemoj predavati bez pokretanja komandi za demonstraciju i testove na svom računaru.
+- Ako profesor traži dokaz rada, priloži screenshot uspješnog pokretanja demo programa i `pytest -v`.
+- U README dopiši svoje ime, predmet/grupu i eventualne detalje koje traži nastavnik.
