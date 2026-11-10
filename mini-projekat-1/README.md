@@ -113,15 +113,36 @@ python -m rezervacije report data/rezervacije.csv --output izvjestaj.json
 
 Demo obračun: R001 = 216.00; R002 = 240.00; R003 otkazana; R004 = 44.40, ukupno **500.40 EUR**.
 
-## 7. Objavljivanje na GitHub-u i predaja
+## GitHub repozitorijum i predaja
 
-U terminalu foldera izvršiti:
+Mini projekat 1 nalazi se u folderu `mini-projekat-1` unutar zajedničkog GitHub repozitorijuma za predmet Napredno programiranje.
 
-```bash
-git init
-git add .
-git commit -m "Zadatak 2: refaktoring rezervacija"
-git branch -M main
-git remote add origin https://github.com/ErolDacic/np-Erol-Dacic.git
-git push -u origin main
+**GitHub repozitorijum:** https://github.com/ErolDacic/NP-Erol-Dacic
+
+### Preuzimanje projekta
+
+Za preuzimanje kompletnog repozitorijuma:
+
+```powershell
+git clone https://github.com/ErolDacic/NP-Erol-Dacic.git
+cd NP-Erol-Dacic
+cd mini-projekat-1
+```
+
+Za pokretanje projekta koristiti uputstva za instalaciju i testiranje navedena u prethodnim poglavljima ovog README dokumenta.
+
+### Ažuriranje postojećeg repozitorijuma
+
+Ako je repozitorijum već preuzet i potrebno je poslati nove izmjene, iz glavnog foldera `NP-Erol-Dacic` izvršiti:
+
+```powershell
+git status
+git add mini-projekat-1
+git commit -m "Update mini project 1 documentation"
+git push origin main
+```
+
+Nije potrebno ponovo izvršavati `git init` ili kreirati novi GitHub repozitorijum.
+
+Oba mini projekta i pripremni zadatak nalaze se u istom repozitorijumu, u skladu sa instrukcijama predmeta.
 ```

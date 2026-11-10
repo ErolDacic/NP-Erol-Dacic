@@ -1,3 +1,52 @@
+# Napredno programiranje — UDG
+
+**Univerzitet Donja Gorica (UDG), FIST**
+
+**Student:** Erol Dacic  
+**Predmet:** Napredno programiranje  
+**Programski jezik:** Python 3.12+  
+**Alati:** Visual Studio Code, GitHub, pytest, Ruff, scikit-learn
+
+## Pregled zadataka
+
+Ovaj GitHub repozitorijum sadrži pripremni zadatak i dva mini projekta iz predmeta Napredno programiranje.
+
+| Zadatak | Opis | Lokacija |
+|---|---|---|
+| Priprema radnog okruženja (3 boda) | Python, GitHub, pytest, Ruff i funkcija za prosječnu cijenu | Glavni folder |
+| Mini projekat 1 (4 boda) | Refaktoring obrade rezervacija, SOLID principi i Protocol interfejsi | [mini-projekat-1](mini-projekat-1/) |
+| Mini projekat 2 (6 bodova) | ML eksperimenti, obrasci projektovanja i Iris dataset | [mini-projekat-2](mini-projekat-2/) |
+
+## Struktura repozitorijuma
+
+```text
+NP-Erol-Dacic/
+├── .github/workflows/
+├── mini-projekat-1/
+│   ├── src/rezervacije/
+│   ├── tests/
+│   └── README.md
+├── mini-projekat-2/
+│   ├── src/ml_experiment/
+│   ├── tests/
+│   └── README.md
+├── tests/
+├── prosjecna_cijena.py
+├── pyproject.toml
+└── README.md
+```
+
+## Testiranje
+
+Projekti koriste **pytest** za automatsko testiranje i **Ruff** za provjeru kvaliteta Python koda.
+
+GitHub Actions automatski pokreće definisane provjere nakon postavljanja izmjena u repozitorijum.
+
+Detaljna uputstva za instalaciju, pokretanje, testiranje i objašnjenja implementacije nalaze se u README dokumentaciji svakog mini projekta.
+
+---
+
+## Pripremni zadatak — detaljna dokumentacija
 # Zadatak 1 — Priprema radnog okruženja (3 boda)
 
 **Predmet:** Napredno programiranje, UDG/FIST  

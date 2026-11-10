@@ -21,47 +21,76 @@ Implementacija koristi `scikit-learn`, a testovi `pytest`.
 - pip
 - Visual Studio Code (preporučeno)
 
-## 3. Pokretanje u VS Code
+## 3. Pokretanje u VS Code-u
 
-1. Preuzmi i raspakuj ZIP arhivu.
-2. U VS Code izaberi **File → Open Folder** i otvori raspakovani folder `ml_experiment_framework`.
-3. Otvori terminal u VS Code: **Terminal → New Terminal**.
-4. Kreiraj virtuelno okruženje:
+Mini projekat 2 nalazi se u folderu `mini-projekat-2` unutar zajedničkog GitHub repozitorijuma `NP-Erol-Dacic`.
 
-   **Windows (PowerShell):**
-   ```powershell
-   py -m venv .venv
-   .venv\Scripts\Activate.ps1
-   ```
+### Preuzimanje repozitorijuma
 
-   **macOS / Linux:**
-   ```bash
-   python3 -m venv .venv
-   source .venv/bin/activate
-   ```
+```powershell
+git clone https://github.com/ErolDacic/NP-Erol-Dacic.git
+cd NP-Erol-Dacic
+cd mini-projekat-2
+```
 
-5. Instaliraj projekat i zavisnosti:
-   ```bash
-   python -m pip install --upgrade pip
-   pip install -e ".[dev]"
-   ```
-   Alternativa je `pip install -r requirements.txt`.
+Ako je repozitorijum već preuzet, dovoljno je otvoriti folder `mini-projekat-2` u Visual Studio Code-u.
 
-6. Pokreni demonstraciju:
-   ```bash
-   python -m ml_experiment.demo
-   ```
-   Ili izaberi drugi model:
-   ```bash
-   python -m ml_experiment.demo --model decision_tree
-   python -m ml_experiment.demo --model knn
-   ```
+### Kreiranje virtuelnog okruženja
 
-7. Pokreni testove:
-   ```bash
-   pytest -v
-   ```
-   Očekuje se da svi testovi prođu. Tačne vrijednosti metrika mogu neznatno zavisiti od verzija biblioteka.
+**Windows (PowerShell):**
+
+```powershell
+py -m venv .venv
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\.venv\Scripts\Activate.ps1
+```
+
+**macOS / Linux:**
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+### Instalacija biblioteka
+
+```powershell
+python -m pip install --upgrade pip
+python -m pip install -e ".[dev]"
+```
+
+### Pokretanje ML eksperimenta
+
+Logistic Regression:
+
+```powershell
+python -m ml_experiment.demo
+```
+
+Decision Tree:
+
+```powershell
+python -m ml_experiment.demo --model decision_tree
+```
+
+K-Nearest Neighbors:
+
+```powershell
+python -m ml_experiment.demo --model knn
+```
+
+Program koristi Iris dataset i prikazuje Accuracy, F1-score i vrijeme treniranja.
+
+### Pokretanje testova i provjere koda
+
+```powershell
+python -m pytest -v
+python -m ruff check .
+```
+
+Očekivano je da svih 11 pytest testova prođe i da Ruff ne pronađe greške.
+
+Za ručno pokretanje Ruff-a po potrebi instalirati razvojne zavisnosti iz `pyproject.toml`.
 
 ## 4. Struktura projekta
 
